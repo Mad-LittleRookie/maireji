@@ -1,0 +1,12 @@
+openai
+langchain
+python-dotenv
+tiktoken
+streamlit
+pinecone-client==2.2.4
+argparse
+pandas
+-- beautifulsoup4
+-- selenium
+tabulate
+Scrapy

@@ -1,4 +1,4 @@
-# mAiReji - Ver 0.1
+# mAiReji - Ver 0.1.0
 mAiReji for real-time award ticket using Django, Celery, NLTK
 
 # Run
