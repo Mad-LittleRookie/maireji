@@ -1,128 +1,61 @@
 import scrapy
-import argparse
-from pprint import pprint
 from scrapy.spiders import CrawlSpider, Rule
-from scrapy.linkextractors import LinkExtractor
+from scrapy.http import HtmlResponse
+from scrapy.selector import Selector
+from bs4 import BeautifulSoup
+
 
 # class AaSpider(scrapy.Spider):
-class AaSpider(CrawlSpider):
-    name = "aa"
-    allowed_domains = ["aa.com"]
-    start_urls = ["https://www.aa.com/"]
-    #start_urls = ["https://www.aa.com/booking/"]
-    #start_urls = ["https://www.aa.com/booking/search?locale=en_US&pax=1&adult=1&child=0&type=OneWay&searchType=Award&cabin=&carriers=ALL&slices=%5B%7B%22orig%22:%22MSN%22,%22origNearby%22:true,%22dest%22:%22DFW%22,%22destNearby%22:true,%22date%22:%222024-07-30%22%7D%5D&maxAwardSegmentAllowed=2"]
-    #allowed_domains = ["toscrapea.com"]
+#allowed_domains = ["toscrapea.com"]
     #start_urls = ["http://books.toscrape.com/"]
-    rules = (
-        Rule(LinkExtractor(allow="catalogue/category")),
-    )
+    # rules = (
+    #     Rule(LinkExtractor(allow="catalogue/category")),
+    # )
     # rules = (scrapy.Spider.Rule(LinkExtractor(allow="price")))
     # rules = (
     #     Rule(LinkExtractor(allow="price")),
     # )
-
-
-
-
-
+class AaSpider(CrawlSpider):
+    name = "aa"
+    allowed_domains = ["aa.com"]
+    start_urls = ["https://www.aa.com/booking/search?locale=en_US&pax=1&adult=1&child=0&type=OneWay&searchType=Award&cabin=&carriers=ALL&slices=%5B%7B%22orig%22:%22MSN%22,%22origNearby%22:true,%22dest%22:%22DFW%22,%22destNearby%22:true,%22date%22:%222024-07-30%22%7D%5D&maxAwardSegmentAllowed=2"]
+    # handle_httpstatus_list = [301, 302]
     def parse(self, response):
-        pass
-    def generate_url(
-            depart_date: str,
-            origin: str,
-            destination: str,
-            n_adults: int,
-            n_children: int,
-    ) -> str:
-        """
-        Generates the URL for the AA award flight page.
+        html = response.body
 
-        Args:
-            depart_date: Departure date in YYYY-MM-DD format.
-            origin: Origin airport code.
-            destination: Destination airport code.
-            n_adults: Number of adults.
-            n_children: Number of children.
+        # Parse HTML using BeautifulSoup
+        soup = BeautifulSoup(html, 'html.parser')
 
-        Returns:
-            url: URL of the AA award flight page to scrape.
+        # Find all flight elements
+        flight_elements = soup.find_all("div", class_="grid-x grid-padding-x ng-star-inserted")
 
-        """
-        n_passengers = n_adults + n_children
-        url = f"https://www.aa.com/booking/search?locale=en_US&pax={n_passengers}&adult={n_adults}&child={n_children}&type=OneWay&searchType=Award&cabin=&carriers=ALL&slices=%5B%7B%22orig%22:%22{origin}%22,%22origNearby%22:true,%22dest%22:%22{destination}%22,%22destNearby%22:true,%22date%22:%22{depart_date}%22%7D%5D&maxAwardSegmentAllowed=2"
-        return url
-    def parser_maker(self):
-        parser = argparse.ArgumentParser(
-            description="Search for AA award availability for multiple origin/destination pairs and dates."
-        )
-        parser.add_argument(
-            "-d",
-            "--depart_date",
-            nargs="+",
-            help="Departure date(s) in YYYY-MM-DD format.",
-            required=True,
-        )
-        parser.add_argument(
-            "-o", "--origin", nargs="+", help="Origin airport codes.", required=True
-        )
-        parser.add_argument(
-            "-des",
-            "--destination",
-            nargs="+",
-            help="Destination airport codes.",
-            required=True,
-        )
-        parser.add_argument("--n_adults", type=int, help="Number of adults.", default=1)
-        parser.add_argument("--n_children", type=int, help="Number of children.", default=0)
-        parser.add_argument(
-            "--max_miles_main",
-            type=int,
-            default=20,
-            help="Maximum number of miles in thousands.",
-        )
-        parser.add_argument(
-            "--max_duration",
-            type=int,
-            default=11 * 60,
-            help="Maximum duration of flight in minutes.",
-        )
-        parser.add_argument(
-            "--depart_time_range",
-            nargs=2,
-            default=["07:00", "16:00"],
-            help="Departure time range in HH:MM format.",
-        )
-        parser.add_argument(
-            "--arrive_time_range",
-            nargs=2,
-            default=["12:00", "22:00"],
-            help="Arrival time range in HH:MM format.",
-        )
-        parser.add_argument(
-            "--max_stops", type=int, default=1, help="Maximum number of stops."
-        )
-        parser.add_argument(
-            "--output_file_raw",
-            default="flights_all.csv",
-            help="Output file for raw flight data.",
-        )
-        parser.add_argument(
-            "--output_file_filtered",
-            default="flights_filtered.csv",
-            help="Output file for filtered flight data.",
-        )
-        parser.add_argument(
-            "--sleep_init_sec",
-            type=int,
-            default=10,
-            help="Initial sleep time in seconds when loading browser.",
-        )
-        parser.add_argument(
-            "--sleep_sec",
-            type=int,
-            default=5,
-            help="Sleep time in seconds between each page load.",
-        )
-        args = parser.parse_args()
-        print("Arguments:")
-        pprint(vars(args))
+        # Process each flight element
+        for flight in flight_elements:
+            # Extract flight details
+            flight_info = {
+                'flight_number': flight.find('span', class_='flight-number').text.strip(),
+                'departure_time': flight.find('span', class_='departure-time').text.strip(),
+                'arrival_time': flight.find('span', class_='arrival-time').text.strip(),
+                # Add more fields as needed
+            }
+
+            yield flight_info
+
+    #     #Check if Redirected
+    #     if response.status in self.handle_httpstatus_list:
+    #         redirected_url = response.headers.get('Location')
+    #         yield Request(redirected_url, callback=self.parse_final)
+    #     else:
+    #         yield self.parse_final(response)
+    #
+    # def parse_final(self,response):
+    #     page_title = response.xpath('//title/text()').get()
+    #     self.logger.info(f"Page Title: {page_title}")
+    #     self.logger.info(f"URL: {response.url}")
+    #     self.logger.info(f"HTML Content: {response.text}")
+    #     yield {
+    #         'url': response.url,
+    #         'title': page_title,
+    #         'content': response.text  # or response.body if you need raw bytes
+    #     }
+

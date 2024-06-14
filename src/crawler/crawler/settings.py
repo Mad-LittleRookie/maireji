@@ -6,9 +6,6 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-import sys
-import os
-import django
 
 # #导入Django-Web路径
 # #但我不知道website setting怎么操作，因为是重合的。
@@ -17,7 +14,9 @@ import django
 #
 # # 启动 Django
 # django.setup()
-
+# import sys
+# import os
+# import django
 BOT_NAME = "crawler"
 
 SPIDER_MODULES = ["crawler.spiders"]
@@ -102,3 +101,16 @@ ROBOTSTXT_OBEY = True
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+
+# # Enable Playwright
+# TWISTED_REACTOR = 'twisted.internet.asyncioreactor.AsyncioSelectorReactor'
+#
+# DOWNLOADER_MIDDLEWARES = {
+#     'scrapy_playwright.middleware.PlaywrightMiddleware': 543,
+# }
+
+# # Enable Webpage Delay
+# DOWNLOADER_MIDDLEWARES = {
+#     'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
+#     'scrapy.extensions.wait.WaitMiddleware': 950,
+# }

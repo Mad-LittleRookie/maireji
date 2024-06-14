@@ -16,9 +16,6 @@ RUN apt-get update && apt-get install -y redis-server
 # 下载NLTK数据集
 RUN python -c "import nltk; nltk.download('punkt')"
 
-# 安装必要库/暂时不需要指定版本
-RUN pip install argparse pandas beautifulsoup4 selenium tabulate celery
-
 # 暴露Django应用的端口
 EXPOSE 8000
 

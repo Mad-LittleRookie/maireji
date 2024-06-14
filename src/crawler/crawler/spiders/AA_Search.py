@@ -257,21 +257,35 @@ if __name__ == "__main__":
         "-d",
         "--depart_date",
         nargs="+",
+        default="2024-10-01",
         help="Departure date(s) in YYYY-MM-DD format.",
         required=True,
     )
     parser.add_argument(
-        "-o", "--origin", nargs="+", help="Origin airport codes.", required=True
+        "-o", "--origin",
+        nargs="+",
+        help="Origin airport codes.",
+        default="MSN",
+        required=True,
     )
     parser.add_argument(
         "-des",
         "--destination",
         nargs="+",
+        default="DFW",
         help="Destination airport codes.",
         required=True,
     )
-    parser.add_argument("--n_adults", type=int, help="Number of adults.", default=1)
-    parser.add_argument("--n_children", type=int, help="Number of children.", default=0)
+    parser.add_argument(
+        "--n_adults",
+        type=int,
+        help="Number of adults.",
+        default=1)
+    parser.add_argument(
+        "--n_children",
+        type=int,
+        help="Number of children.",
+        default=0)
     parser.add_argument(
         "--max_miles_main",
         type=int,
@@ -297,7 +311,10 @@ if __name__ == "__main__":
         help="Arrival time range in HH:MM format.",
     )
     parser.add_argument(
-        "--max_stops", type=int, default=1, help="Maximum number of stops."
+        "--max_stops",
+        type=int,
+        default=1,
+        help="Maximum number of stops."
     )
     parser.add_argument(
         "--output_file_raw",
@@ -377,7 +394,7 @@ if __name__ == "__main__":
         flights = []
         filtered_flights = []
         try:
-            flights = scrape_flight_page(url, driver, sleep_sec=sleep_sec)
+            flights = scrape_flighdt_page(url, driver, sleep_sec=sleep_sec)
         except:
             print("Error scraping. Continuing to next iteration.")
             error_combos.append((dt, o, d))
