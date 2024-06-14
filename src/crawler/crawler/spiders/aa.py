@@ -18,28 +18,32 @@ from bs4 import BeautifulSoup
 class AaSpider(CrawlSpider):
     name = "aa"
     allowed_domains = ["aa.com"]
-    start_urls = ["https://www.aa.com/booking/search?locale=en_US&pax=1&adult=1&child=0&type=OneWay&searchType=Award&cabin=&carriers=ALL&slices=%5B%7B%22orig%22:%22MSN%22,%22origNearby%22:true,%22dest%22:%22DFW%22,%22destNearby%22:true,%22date%22:%222024-07-30%22%7D%5D&maxAwardSegmentAllowed=2"]
+    #start_urls = ["https://www.aa.com/booking/search?locale=en_US&pax=1&adult=1&child=0&type=OneWay&searchType=Award&cabin=&carriers=ALL&slices=%5B%7B%22orig%22:%22MSN%22,%22origNearby%22:true,%22dest%22:%22DFW%22,%22destNearby%22:true,%22date%22:%222024-07-30%22%7D%5D&maxAwardSegmentAllowed=2"]
+    start_urls = ["https://www.aa.com/"]
     # handle_httpstatus_list = [301, 302]
     def parse(self, response):
-        html = response.body
-
-        # Parse HTML using BeautifulSoup
-        soup = BeautifulSoup(html, 'html.parser')
-
-        # Find all flight elements
-        flight_elements = soup.find_all("div", class_="grid-x grid-padding-x ng-star-inserted")
-
-        # Process each flight element
-        for flight in flight_elements:
-            # Extract flight details
-            flight_info = {
-                'flight_number': flight.find('span', class_='flight-number').text.strip(),
-                'departure_time': flight.find('span', class_='departure-time').text.strip(),
-                'arrival_time': flight.find('span', class_='arrival-time').text.strip(),
-                # Add more fields as needed
-            }
-
-            yield flight_info
+        #Deal with the response and be ready for jump to next page and get information
+        with open('aa.html','wb')as f:
+            f.write(response.body)
+        # html = response.body
+        #
+        # # Parse HTML using BeautifulSoup
+        # soup = BeautifulSoup(html, 'html.parser')
+        #
+        # # Find all flight elements
+        # flight_elements = soup.find_all("div", class_="grid-x grid-padding-x ng-star-inserted")
+        #
+        # # Process each flight element
+        # for flight in flight_elements:
+        #     # Extract flight details
+        #     flight_info = {
+        #         'flight_number': flight.find('span', class_='flight-number').text.strip(),
+        #         'departure_time': flight.find('span', class_='departure-time').text.strip(),
+        #         'arrival_time': flight.find('span', class_='arrival-time').text.strip(),
+        #         # Add more fields as needed
+        #     }
+        #
+        #     yield flight_info
 
     #     #Check if Redirected
     #     if response.status in self.handle_httpstatus_list:
