@@ -29,6 +29,10 @@ RUN python manage.py migrate
 # 启动Celery worker
 CMD ["celery", "-A", "news_aggregator", "worker", "--loglevel=info"]
 
+
+#安装angular以及node.js，有一些核心包： ng add @angular/material
+
+
 # 启动Celery beat
 CMD ["celery", "-A", "news_aggregator", "beat", "--loglevel=info"]
 

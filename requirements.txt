@@ -12,3 +12,6 @@ tabulate
 scrapy
 scrapy-playwright
 bs4
+APIView
+Response
+nodejs
