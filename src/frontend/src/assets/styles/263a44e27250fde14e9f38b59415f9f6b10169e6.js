@@ -1,7 +1,5 @@
 /*
-
-
- Copyright (c) 2015-2018 Google, Inc., Netflix, Inc., Microsoft Corp. and contributors
+ Copyright (c) 2024-2024 Contributors
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
@@ -42919,15 +42917,19 @@ BP.Ba = kl({
   ta: function (a, b) {
     a & 1 &&
       (L(0, "div", 1)(1, "p"),
+      // T(
+      //   2,
+      //   " Matrix showcases the flexibility and power of Google's enterprise airfare search product. Matrix is powered by QPX, ITA Software's comprehensive airfare shopping system. "
+      // ),
       T(
         2,
-        " Matrix showcases the flexibility and power of Google's enterprise airfare search product. Matrix is powered by QPX, ITA Software's comprehensive airfare shopping system. "
+        "Welcome to Maireji, We want to be the Best Chinese-English-Japanese Award Ticket Platform"
       ),
       M(),
       L(3, "p"),
       T(
         4,
-        " Version 5.0 has been completely rebuilt to run on Angular. Let us know what you think. "
+        " Version 0.0.1 has been completely rebuilt to run on Angular. Let us know what you think. "
       ),
       M(),
       L(5, "p"),
@@ -42936,9 +42938,9 @@ BP.Ba = kl({
         ' QPX is named after a "fictitious point" in IATA standards for representing airline schedules, allowing the inclusion of flight segments that otherwise could not be represented due to technical constraints. No flights actually arrive or depart at that airport. '
       ),
       M(),
-      J(7, gla, 2, 1, "div", 2),
+      // J(7, gla, 2, 1, "div", 2), //似乎是指向了一段我觉得没啥意义的代码
       L(8, "div", 3),
-      J(9, jla, 4, 2, "button", 4),
+      // J(9, jla, 4, 2, "button", 4), //是选择按钮，似乎可以进行翻页
       M()(),
       L(10, "mat-dialog-actions", 5)(11, "button", 6),
       U(12, "orPrimary"),
@@ -43925,7 +43927,8 @@ var fQ = function (a, b, c, d, e, f, g) {
         return typeof l === "function" ? l(k.Na) : so(l);
       }),
       Jo(function (l) {
-        return l ? l + "  ||  ITA Matrix by Google" : "ITA Matrix by Google";
+        //return l ? l + "  ||  ITA Matrix by Google" : "ITA Matrix by Google";
+        return l ? l + " - The Best Flight Ticket One-stop Platform" : "The Best Flight Ticket One-stop Platform";
       }),
       Us(this.Bb)
     )
@@ -43959,10 +43962,10 @@ fQ.Ba = kl({
     ["class", "gmat-blue-700", 4, "ngIf"],
     [1, "header-container"],
     [1, "left-header"],
-
     // ["href", "https://www.itasoftware.com"],
     // ["alt", "ITA logo", 1, "ita-logo", 3, "src"],
-    ["alt", "ITA logo",  "ita-logo", "src"],
+    ["href", "https://www.maireji.com"],
+    ["alt", "Maireji Logo Place holder", 1, "ita-logo", "src"],
 
     [3, "vertical"],
     ["href", "/", 1, "matrix-title"],
@@ -44000,7 +44003,7 @@ fQ.Ba = kl({
       M(),
       N(6, "mat-divider", 5),
       L(7, "a", 6)(8, "h1", 7),
-      T(9, "Matrix Airfare Search"),
+      T(9, "Maireji Award Ticket Search"),
       M()()(),
       L(10, "div")(11, "button", 8),
       O("click", function () {
@@ -44023,7 +44026,8 @@ fQ.Ba = kl({
       T(23, "Feedback"),
       M(),
       L(24, "a", 14),
-      T(25, "Help Center"),
+      // T(25, "Help Center")
+      T(25, "Buy a Cup of Coffee for Maireji.com"),
       M()());
     a & 2 &&
       (K("ngIf", b.eZ), G(5), Tu("src", b.Fba, fr), G(), K("vertical", !0));
@@ -83125,12 +83129,15 @@ M2.Ba = kl({
       ],
       [1, "welcome-modal"],
       [1, "gfs-panel"],
-      ["alt", "", 1, "gfs-logo", 3, "src"],
+      ["alt", "Maireji Logo place holder", 1, "gfs-logo", 3, "src"],
       // ["alt", "GFS logo", 1, "gfs-logo", 3, "src"],
       [1, "gfs-panel-content"],
       [1, "gfs-header"],
       ["description", "Google Flight Search promo header"],
-      "mat-button  href https://www.google.com/flights/ target _blank".split(
+      // "mat-button  href https://www.google.com/flights/ target _blank".split(
+      //   " "
+      // ),
+      "mat-button  href https://lichengpiao.com/ target _blank".split(
         " "
       ),
     ];
@@ -83381,7 +83388,7 @@ var gwa = [
         },
       },
     },
-    { path: "search", component: M2, data: { title: "Search flights" } },
+    { path: "search", component: M2, data: { title: "Maireji" } },
     {
       path: "itinerary",
       component: y1,
